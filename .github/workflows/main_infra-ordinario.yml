@@ -26,11 +26,15 @@ jobs:
         username: ${{ secrets.AzureAppService_ContainerUsername_b81a0a2634fd44dabf05b8ca6dbd8d03 }}
         password: ${{ secrets.AzureAppService_ContainerPassword_3443adc8969c4df6b1d9db441644c978 }}
 
+    - name: Convert username to lowercase
+      id: lowercase
+      run: echo "username=$(echo ${{ secrets.AzureAppService_ContainerUsername_b81a0a2634fd44dabf05b8ca6dbd8d03 }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: infrabackflask.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_b81a0a2634fd44dabf05b8ca6dbd8d03 | lower }}/flask-backend:${{ github.sha }}
+        tags: infrabackflask.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_b81a0a2634fd44dabf05b8ca6dbd8d03 }}/flask-backend:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
