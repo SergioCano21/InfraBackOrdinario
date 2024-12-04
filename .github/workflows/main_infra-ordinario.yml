@@ -22,15 +22,15 @@ jobs:
     - name: Log in to registry
       uses: docker/login-action@v2
       with:
-        registry: https://infrabackflask.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_b81a0a2634fd44dabf05b8ca6dbd8d03 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_3443adc8969c4df6b1d9db441644c978 }}
+        registry: https://infraestructura.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_97aeb19c330e43b2baa9986858fae998 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_b95b10dab8d54a0dbb6eb557588f9e1b }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: infrabackflask.azurecr.io/infrabackflask/flask-backend:${{ github.sha }}
+        tags: infraestructura.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_97aeb19c330e43b2baa9986858fae998 }}/flask-backend:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'infra-ordinario'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_6bec62f7ee024dd1a7e0a4f67cb9aa39 }}
-        images: 'infrabackflask.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_b81a0a2634fd44dabf05b8ca6dbd8d03 }}/flask-backend:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_48d37414c46445f1b808691bf0a74797 }}
+        images: 'infraestructura.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_97aeb19c330e43b2baa9986858fae998 }}/flask-backend:${{ github.sha }}'
