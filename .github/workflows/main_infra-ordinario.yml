@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: infrabackflask.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_b81a0a2634fd44dabf05b8ca6dbd8d03 }}/flask-backend:${{ github.sha }}
+        tags: infrabackflask.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_b81a0a2634fd44dabf05b8ca6dbd8d03 | lower }}/flask-backend:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
